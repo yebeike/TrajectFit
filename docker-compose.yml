@@ -1,0 +1,39 @@
+# docker-compose.yml
+services:
+  # MySQL数据库
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: trajectfit
+      MYSQL_USER: trajectfit_user
+      MYSQL_PASSWORD: trajectfit_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # MongoDB数据库
+  mongodb:
+    image: mongo:6.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+      MONGO_INITDB_DATABASE: trajectfit
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  # Redis缓存
+  redis:
+    image: redis:7.0
+    ports:
+      - "6380:6379"  # 改为6380，外部访问使用6380
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mysql_data:
+  mongodb_data:
+  redis_data:
